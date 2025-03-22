@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SciNexGen - Interactive Science App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-image: url('background .jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-y: auto;
+        }
+        .app-container {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 1000px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #FFDD57;
+            margin-bottom: 20px;
+        }
+
+        .start-button {
+            background-color: #FF6B6B;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            transition: background-color 0.3s;
+        }
+
+        .start-button:hover {
+            background-color: #E05656;
+        }
+
+        .subject-section {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            display: none;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 10px;
+        }
+
+        ul li {
+            background-color: rgba(255, 255, 255, 0.2);
+            margin-bottom: 8px;
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            color: #fff;
+            transition: background-color 0.3s;
+            position: relative;
+        }
+
+        ul li:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .lesson-details {
+            margin-top: 5px;
+            font-size: 0.9em;
+            color: #FFDD57;
+            display: none;
+            margin-left: 20px;
+        }
+        .quiz-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .quiz-content {
+            background-color: #fff;
+            color: #000;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            text-align: left;
+        }
+
+        .quiz-content h3 {
+            margin-top: 0;
+        }
+
+        .quiz-options {
+            list-style: none;
+            padding: 0;
+        }
+
+        .quiz-options li {
+            margin-bottom: 10px;
+        }
+
+        .quiz-options button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #FF6B6B;
+            color: #fff;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+
+        .quiz-options button:hover {
+            background-color: #E05656;
+        }
+
+        .close-quiz {
+            background-color: #FF6B6B;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+
+        .close-quiz:hover {
+            background-color: #E05656;
+        }
+    </style>
+</head>
+<body>
+   <div class="app-container">
+    <h1>🔬 SciNexGen</h1>
+    <button class="start-button" onclick="loadAllSubjects()">Start Learning</button>
+
+    <div id="subjects">
+        <!-- Physics -->
+        <div class="subject-section">
+            <h2>⚛️ Physics</h2>
+            <ul>
+                <li onclick="toggleDetails(this)">Lesson 1: Newton's Laws
+                    <div class="lesson-details">Newton's First Law of Motion...</div>
+                </li>
+                <li onclick="toggleDetails(this)">Lesson 2: Energy and Work
+                    <div class="lesson-details">Learn about energy transformation...</div>
+                </li>
+                <li onclick="toggleDetails(this)">Lesson 3: Gravity and Forces
+                    <div class="lesson-details">Understand gravitational forces...</div>
+                </li>
+                <li onclick="toggleDetails(this)">Lesson 4: Waves and Sound
+                    <div class="lesson-details">Explore the nature of waves...</div>
+                </li>
+                <li onclick="toggleDetails(this)">Lesson 5: Light and Optics
+                    <div class="lesson-details">Study the behavior of light...</div>
+                </li>
+            </ul>
+            <button class="quiz-button" onclick="startPhysicsQuiz()">Take Physics Quiz</button>
+        </div>
+
+        <!-- Chemistry -->
+        <div class="subject-section">
+            <h2>🧪 Chemistry</h2>
+            <ul>
+                <li onclick="toggleDetails(this)">Lesson 1: Atoms and Elements
+                    <div class="lesson-details">Discover the fundamental building blocks...</div>
+                </li>
+                <li onclick="toggleDetails(this)">Lesson 2: Chemical Bonding
+                    <div class="lesson-details">Learn about ionic, covalent bonds...</div>
+                </li>
+                <li onclick="toggleDetails(this)">Lesson 3: The Periodic Table
+                    <div class="lesson-details">Understand the structure of the periodic table...</div>
+                </li>
+                <li onclick="toggleDetails(this)">Lesson 4: Acids and Bases
+                    <div class="lesson-details">Explore pH, acids, and bases...</div>
+                </li>
+                <li onclick="toggleDetails(this)">Lesson 5: Chemical Reactions
+                    <div class="lesson-details">Study different types of chemical reactions...</div>
+                </li>
+            </ul>
+            <button class="quiz-button" onclick="startChemistryQuiz()">Take Chemistry Quiz</button>
+        </div>
+    </div>
+
+    <!-- Quiz Modal -->
+    <div id="quizModal" class="quiz-modal">
+        <div class="quiz-content">
+            <h3 id="quizQuestion">Question</h3>
+            <ul id="quizOptions" class="quiz-options"></ul>
+            <p id="timer">Time Left: 10s</p>
+            <button class="close-quiz" onclick="closeQuiz()">Close Quiz</button>
+        </div>
+    </div>
+</div>
+
+<!-- Canvas for Confetti -->
+<canvas id="confettiCanvas"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+
+<script>
+    function loadAllSubjects() {
+        document.getElementById('subjects').style.display = 'block';
+        document.querySelector('.start-button').style.display = 'none';
+    }
+
+    // Physics Quiz Data (Updated with 10 more questions)
+    const physicsQuizData = [
+        { question: "What is the unit of force?", options: ["Newton", "Joule", "Watt"], answer: "Newton" },
+        { question: "What is the value of the speed of light?", options: ["300,000 km/s", "150,000 km/s", "450,000 km/s"], answer: "300,000 km/s" },
+        { question: "What is the value of acceleration due to gravity?", options: ["9.8 m/s²", "10 m/s²", "8.9 m/s²"], answer: "9.8 m/s²" },
+        { question: "Who discovered the law of gravitation?", options: ["Isaac Newton", "Albert Einstein", "Galileo Galilei"], answer: "Isaac Newton" },
+        { question: "What is the SI unit of energy?", options: ["Joule", "Newton", "Watt"], answer: "Joule" },
+        { question: "What is the formula for kinetic energy?", options: ["½mv²", "mgh", "v²/2"], answer: "½mv²" },
+        { question: "What force opposes the motion of objects?", options: ["Friction", "Gravity", "Magnetism"], answer: "Friction" },
+        { question: "What is the speed of sound in air?", options: ["343 m/s", "1000 m/s", "500 m/s"], answer: "343 m/s" },
+        { question: "What does the term 'velocity' refer to?", options: ["Speed in a given direction", "Distance covered", "Time taken"], answer: "Speed in a given direction" },
+        { question: "Which of the following is an example of potential energy?", options: ["Water in a dam", "A moving car", "Electricity flowing"], answer: "Water in a dam" },
+        { question: "What does Newton's Third Law state?", options: ["For every action, there is an equal and opposite reaction", "Force equals mass times acceleration", "Energy cannot be created or destroyed"], answer: "For every action, there is an equal and opposite reaction" },
+        { question: "What is the formula for work?", options: ["Force x Distance", "Mass x Acceleration", "Force x Time"], answer: "Force x Distance" },
+        { question: "What does the law of conservation of energy state?", options: ["Energy cannot be created or destroyed", "Energy increases with time", "Energy always decreases"], answer: "Energy cannot be created or destroyed" }
+    ];
+
+    // Chemistry Quiz Data (Updated with 10 more questions)
+    const chemistryQuizData = [
+        { question: "What is the chemical symbol for water?", options: ["H2O", "O2", "CO2"], answer: "H2O" },
+        { question: "What is the pH of pure water?", options: ["7", "0", "14"], answer: "7" },
+        { question: "Which element is most abundant in the Earth's crust?", options: ["Oxygen", "Carbon", "Iron"], answer: "Oxygen" },
+        { question: "What is the atomic number of carbon?", options: ["6", "8", "12"], answer: "6" },
+        { question: "What is the name of the process in which a liquid turns into a gas?", options: ["Evaporation", "Condensation", "Sublimation"], answer: "Evaporation" },
+        { question: "Which gas is most abundant in the Earth's atmosphere?", options: ["Nitrogen", "Oxygen", "Carbon Dioxide"], answer: "Nitrogen" },
+        { question: "What is the formula for methane?", options: ["CH4", "C2H6", "CO2"], answer: "CH4" },
+        { question: "What is the atomic symbol for gold?", options: ["Au", "Ag", "Pb"], answer: "Au" },
+        { question: "Which of the following is an example of an alkaline earth metal?", options: ["Calcium", "Sodium", "Iron"], answer: "Calcium" },
+        { question: "What is the term for the process where an atom gains or loses electrons?", options: ["Ionization", "Fusion", "Fission"], answer: "Ionization" },
+        { question: "What type of bond is formed between two nonmetals?", options: ["Covalent", "Ionic", "Metallic"], answer: "Covalent" },
+        { question: "What is the formula for sulfuric acid?", options: ["H2SO4", "HCl", "HNO3"], answer: "H2SO4" }
+    ];
+
+    let currentQuestion = 0;
+    let timer;
+    let timeLeft = 15;
+    let currentQuizData = [];
+
+    // Start Physics Quiz
+    function startPhysicsQuiz() {
+        currentQuizData = physicsQuizData;
+        startQuiz();
+    }
+
+    // Start Chemistry Quiz
+    function startChemistryQuiz() {
+        currentQuizData = chemistryQuizData;
+        startQuiz();
+    }
+
+    // Common function to start the quiz
+    function startQuiz() {
+        currentQuestion = 0;
+        timeLeft = 15;
+        document.getElementById("quizModal").style.display = "flex";
+        loadQuestion();
+        startTimer();
+    }
+
+    function loadQuestion() {
+        const questionData = currentQuizData[currentQuestion];
+        document.getElementById("quizQuestion").innerText = questionData.question;
+        document.getElementById("quizOptions").innerHTML = "";
+
+        questionData.options.forEach(option => {
+            const btn = document.createElement("button");
+            btn.innerText = option;
+            btn.onclick = () => checkAnswer(option);
+            document.getElementById("quizOptions").appendChild(btn);
+        });
+    }
+
+    function startTimer() {
+        document.getElementById("timer").innerText = `Time Left: ${timeLeft}s`;
+        timer = setInterval(() => {
+            timeLeft--;
+            document.getElementById("timer").innerText = `Time Left: ${timeLeft}s`;
+            if (timeLeft <= 0) {
+                nextQuestion();
+            }
+        }, 1000);
+    }
+
+    function checkAnswer(option) {
+        if (option === currentQuizData[currentQuestion].answer) alert("Correct!");
+        else alert("Wrong!");
+        nextQuestion();
+    }
+
+    function nextQuestion() {
+        clearInterval(timer);
+        currentQuestion++;
+        if (currentQuestion < currentQuizData.length) {
+            timeLeft = 15;
+            loadQuestion();
+            startTimer();
+        } else {
+            alert("Quiz Completed!");
+            celebrate();
+            closeQuiz();
+        }
+    }
+
+    function closeQuiz() {
+        clearInterval(timer);
+        document.getElementById("quizModal").style.display = "none";
+    }
+
+    function celebrate() {
+        // Trigger confetti when quiz is completed
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
+        });
+    }
+</script>
+   
+
+            <!-- Biology -->
+            <div class="subject-section">
+                <h2>🌱 Biology</h2>
+                <ul>
+                    <li onclick="toggleDetails(this)">Lesson 1: Cell Structure
+                        <div class="lesson-details">Explore cell organelles and their functions.</div>
+                    </li>
+                    <li onclick="toggleDetails(this)">Lesson 2: Genetics
+                        <div class="lesson-details">Learn about heredity, genes, and DNA.</div>
+                    </li>
+                    <li onclick="toggleDetails(this)">Lesson 3: Evolution
+                        <div class="lesson-details">Study natural selection and species adaptation.</div>
+                    </li>
+                    <li onclick="toggleDetails(this)">Lesson 4: Human Anatomy
+                        <div class="lesson-details">Understand body systems and their functions.</div>
+                    </li>
+                    <li onclick="toggleDetails(this)">Lesson 5: Ecology and Ecosystems
+                    </ul>
+                    <button class="quiz-button" onclick="alert('Biology Quiz Coming Soon!')">Take Biology Quiz</button>
+
+                        <div class="lesson-details">Explore ecological relationships and environmental balance.</div>
+                        <section id="earthScience" class="subject-section">
+                            <h2>🌎 Earth Science</h2>
+                            <ul>
+                                <li onclick="toggleDetails(this)">Lesson 1: Earth's Layers
+                                    <div class="lesson-details">Learn about the Earth's crust, mantle, outer core, and inner core, including their composition and characteristics.</div>
+                                </li>
+                                <li onclick="toggleDetails(this)">Lesson 2: Plate Tectonics
+                                    <div class="lesson-details">Explore the theory of plate tectonics, the movement of Earth's plates, and their role in earthquakes and volcanic activities.</div>
+                                </li>
+                                <li onclick="toggleDetails(this)">Lesson 3: Weather and Climate
+                                    <div class="lesson-details">Understand the difference between weather and climate, the factors affecting them, and the impact of climate change.</div>
+                                </li>
+                                <li onclick="toggleDetails(this)">Lesson 4: Geologic Time
+                                    <div class="lesson-details">Study the concept of geologic time, the history of Earth, and the processes used to date rocks and fossils.</div>
+                                </li>
+                                <li onclick="toggleDetails(this)">Lesson 5: Natural Resources and Conservation
+                                    <div class="lesson-details">Learn about Earth's natural resources, their sustainable use, and methods of conservation.</div>
+                                </li>
+                            </ul>
+                            <button class="quiz-button" onclick="alert('Earth Science Quiz Coming Soon!')">Take Earth Science Quiz</button>
+                        </section>
+                        
+                        <!-- Earth and Life Science Section -->
+                        <section id="earthLife" class="subject-section">
+                            <h2>🌱 Earth and Life Science</h2>
+                            <ul>
+                                <li onclick="toggleDetails(this)">Lesson 1: Ecosystems and Biodiversity
+                                    <div class="lesson-details">Explore the structure of ecosystems, food chains, and the importance of biodiversity for ecological balance.</div>
+                                </li>
+                                <li onclick="toggleDetails(this)">Lesson 2: Evolution and Adaptation
+                                    <div class="lesson-details">Understand the principles of evolution, natural selection, and how organisms adapt to their environments.</div>
+                                </li>
+                                <li onclick="toggleDetails(this)">Lesson 3: Human Anatomy and Physiology
+                                    <div class="lesson-details">Study the major systems of the human body, their functions, and how they work together to maintain homeostasis.</div>
+                                </li>
+                                <li onclick="toggleDetails(this)">Lesson 4: Plant and Animal Life
+                                    <div class="lesson-details">Learn about the classification of plants and animals, their life cycles, and reproduction processes.</div>
+                                </li>
+                                <li onclick="toggleDetails(this)">Lesson 5: Environmental Science
+                                    <div class="lesson-details">Examine the relationship between humans and the environment, including pollution, sustainability, and conservation efforts.</div>
+                                </li>
+                            </ul>
+                            <button class="quiz-button" onclick="alert('what is the hottest star in our solar system?!')">Take Earth and Life Science Quiz</button>
+                        </section>
+                        
+                        <!-- Physical Science Section -->
+                        <section id="physicalScience" class="subject-section">
+                            <h2>⚛️ Physical Science</h2>
+                            <ul>
+                                <li onclick="toggleDetails(this)">Lesson 1: Matter and Its Properties
+                                    <div class="lesson-details">Understand the states of matter, physical and chemical properties, and how matter changes from one state to another.</div>
+                                </li>
+                                <li onclick="toggleDetails(this)">Lesson 2: Energy and Thermodynamics
+                                    <div class="lesson-details">Learn about the various forms of energy, energy transformation, and the laws of thermodynamics.</div>
+                                </li>
+                                <li onclick="toggleDetails(this)">Lesson 3: Waves and Sound
+                                    <div class="lesson-details">Explore the properties of waves, the nature of sound, and how it travels through different mediums.</div>
+                                </li>
+                                <li onclick="toggleDetails(this)">Lesson 4: Electricity and Magnetism
+                                    <div class="lesson-details">Study electric circuits, electromagnetic fields, and the relationship between electricity and magnetism.</div>
+                                </li>
+                                <li onclick="toggleDetails(this)">Lesson 5: Forces and Motion
+                                    <div class="lesson-details">Understand the fundamental forces in nature, Newton's laws of motion, and their applications in the real world.</div>
+                                </li>
+                            </ul>
+                            <button class="quiz-button" onclick="alert('Physical Science Quiz Coming Soon!')">Take Physical Science Quiz</button>
+                        </section>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function loadAllSubjects() {
+            document.querySelectorAll('.subject-section').forEach(section => {
+                section.style.display = 'block';
+            });
+            document.querySelector('.start-button').style.display = 'none';
+        }
+
+        function toggleDetails(listItem) {
+            const details = listItem.querySelector('.lesson-details');
+            const allDetails = document.querySelectorAll('.lesson-details');
+
+            // Hide all other details
+            allDetails.forEach(detail => {
+                if (detail !== details) {
+                    detail.style.display = 'none';
+                }
+            });
+
+            // Toggle the clicked one
+            details.style.display = details.style.display === 'none' ? 'block' : 'none';
+        }
+
+        window.onload = () => {
+            document.querySelectorAll('.subject-section').forEach(section => {
+                section.style.display = 'none';
+            });
+        };
+    </script>
+</body>
+</html>
